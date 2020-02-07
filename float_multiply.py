@@ -6,6 +6,7 @@ START = 1.0
 END = 9.9
 ROUND = 2
 
+ZEROES = ["", "and an extra zero", "and two extra zeroes"]
 
 def get_random_number() -> float:
     while True:
@@ -54,8 +55,8 @@ def get_multiply_steps(n1, n2):
         line = f"{colored(plus,'magenta')}{indent}{colored(term,'yellow')}"
         step = str(j) + ' × ' + str(n1)
         indent = ' ' * (20-len(step))
-        extra_zeroes = f" and {i} extra '0'" if i and term else ""
-        calc.append(f"{line:>10}{indent}{colored(step,'cyan')}{extra_zeroes}")
+        extra_zeroes = ZEROES[i] if term else ""
+        calc.append(f"{line:>10}{indent}{colored(step+' '+extra_zeroes,'cyan')}")
     calc.append(colored(f"----------",'blue'))
     line = f"{sum}"
     indent = ' '*(9-len(line))
@@ -68,9 +69,7 @@ if __name__ == "__main__":
     while True:
 
         n1, n2 = get_random_numbers()
-        print("")
-        print("-------------------------------------------------------------------")
-        print("")
+        print("\033[2J\033[2H")
         print("I've picked two random numbers. You have to multiply them together.")
         print("")
         print("Your challenge is:")
@@ -96,6 +95,6 @@ if __name__ == "__main__":
             print((' '*12)+line)
         print("")
 
-        print("Try another one? (Yes or No) ", end="")
+        print("Try another one? ('yes' or 'no') ", end="")
         if get_yes_no() != "yes":
             break
